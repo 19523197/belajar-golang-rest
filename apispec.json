@@ -1,0 +1,46 @@
+{
+    "openapi": "3.0.3",
+    "info" : {
+        "title" : "Category RESTfu API",
+        "description" : "API Spec for category RESTful API",
+        "version" : "1.0.0"
+    },
+    "servers" : [
+        {
+            "url" : "http://localhost:8001/api"
+        }
+    ],
+    "paths":{
+        "/category" : {
+            "get" : {
+                "200" : {
+                    "description" : "success get all categories",
+                    "content" : {
+                        "schema" : {
+                            "type" : "object",
+                            "properties" : {
+                                "code" : {
+                                    "type" : "number"
+                                },
+                                "status" : {
+                                    "type" : "string"
+                                },
+                                "data" : {
+                                    "type" : "array",
+                                    "items" : {
+                                        "type" : "object",
+                                        "properties" : {
+                                            "id" : {
+                                                "type" : "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"belajar-golang-rest/exception"
 	"belajar-golang-rest/helper"
 	"belajar-golang-rest/model/domain"
 	"belajar-golang-rest/model/web"
@@ -54,7 +55,9 @@ func (service *CategoryServiceImpl) Update(ctx context.Context, request web.Cate
 	defer helper.CommitorRollback(tx)
 
 	category, err := service.repository.FindOne(ctx, tx, request.Id)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	category.Name = request.Name
 	category.Kode = request.Kode
@@ -71,7 +74,9 @@ func (service *CategoryServiceImpl) Delete(ctx context.Context, categoryId int) 
 	defer helper.CommitorRollback(tx)
 
 	category, err := service.repository.FindOne(ctx, tx, categoryId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	service.repository.Delete(ctx, tx, category)
 
@@ -84,7 +89,9 @@ func (service *CategoryServiceImpl) FindById(ctx context.Context, categoryId int
 	defer helper.CommitorRollback(tx)
 
 	category, err := service.repository.FindOne(ctx, tx, categoryId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	return helper.ToCategoryResponse(category)
 }
@@ -96,7 +103,9 @@ func (service *CategoryServiceImpl) FindAll(ctx context.Context) []web.CategoryR
 	defer helper.CommitorRollback(tx)
 
 	categories, err := service.repository.FindAll(ctx, tx)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	return helper.ToCategoryResponses(categories)
 }
